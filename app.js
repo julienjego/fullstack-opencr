@@ -36,6 +36,6 @@ app.use(express.json());
 app.use("/api/stuff", stuffRoutes);
 
 //Mise en place du routing pour l'authentification Users
-app.use("api/auth", userRoutes);
+app.use("/api/auth", userRoutes);
 
 module.exports = app;
