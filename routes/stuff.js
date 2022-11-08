@@ -2,45 +2,21 @@ const express = require("express");
 const router = express.Router();
 
 const Thing = require("../models/thing");
+const stuffController = require("../controllers/stuff");
 
 // Méthode POST pour l'envoi de nouveaux objets
-router.post("/", (req, res, next) => {
-    delete req.body._id;
-    const thing = new Thing({
-        ...req.body,
-    });
-    thing
-        .save()
-        .then(() => res.status(201).json({ message: "Objet enregistré !" }))
-        .catch((error) => res.status(400).json({ error }));
-});
+router.post("/", stuffController.createThing);
 
 // Méthode GET pour récupérer tous les objets
-router.get("/", (req, res, next) => {
-    Thing.find()
-        .then((things) => res.status(200).json(things))
-        .catch((error) => res.status(400).json({ error }));
-});
+router.get("/", stuffController.getAllThings);
 
 // Méthode GET pour récupérer un objet
-router.get("/:id", (req, res, next) => {
-    Thing.findOne({ _id: req.params.id })
-        .then((thing) => res.status(200).json(thing))
-        .catch((error) => res.status(404).json({ error }));
-});
+router.get("/:id", stuffController.getOneThing);
 
 // Méthode PUT pour modifier un objet
-router.put("/:id", (req, res, next) => {
-    Thing.updateOne({ _id: req.params.id }, { ...req.body, _id: req.params.id })
-        .then(() => res.status(200).json({ message: "Objet modifié !" }))
-        .catch((error) => res.status(404).json({ error }));
-});
+router.put("/:id", stuffController.modifyThing);
 
 //Méthode DELETE pour supprimer un objet
-router.delete("/:id", (req, res, next) => {
-    Thing.deleteOne({ _id: req.params.id })
-        .then(() => res.status(200).json({ message: "Objet supprimé !" }))
-        .catch((error) => res.status(400).json({ error }));
-});
+router.delete("/:id", stuffController.deleteThing);
 
 module.exports = router;

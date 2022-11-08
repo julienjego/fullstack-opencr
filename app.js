@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 
 const stuffRoutes = require("./routes/stuff");
+const userRoutes = require("./routes/user");
 
 const app = express();
 
@@ -31,7 +32,10 @@ app.use((req, res, next) => {
 //Middleware pour extraire le corps json d'une requête POST
 app.use(express.json());
 
-// Mise en place du routing
+// Mise en place du routing pour les Things
 app.use("/api/stuff", stuffRoutes);
+
+//Mise en place du routing pour l'authentification Users
+app.use("api/auth", userRoutes);
 
 module.exports = app;
