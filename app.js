@@ -4,6 +4,8 @@ const mongoose = require("mongoose");
 const stuffRoutes = require("./routes/stuff");
 const userRoutes = require("./routes/user");
 
+const path = require("path");
+
 const app = express();
 
 //Connexion à la base MongoDb
@@ -37,5 +39,8 @@ app.use("/api/stuff", stuffRoutes);
 
 //Mise en place du routing pour l'authentification Users
 app.use("/api/auth", userRoutes);
+
+//Routage vers le bon dossier images
+app.use("/images", express.static(path.join(__dirname, "images")));
 
 module.exports = app;
